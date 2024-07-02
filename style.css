@@ -1,0 +1,140 @@
+body {
+    font-family: Inter, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background: #414548;
+    color: #f1f1f1;
+    position: relative;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: linear-gradient(to right, #00c3e3 0% 15%, #161616 16% 84%,#ff4554 85% 100%);
+    box-shadow: 0px 10px 23px -15px #121212;
+    border-radius: 0 0 14px 14px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.header__logo {
+    height: 70px;
+    border-radius: 14px;
+}
+
+.header__links {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    gap: 24px;
+}
+
+.header__link {
+    border: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+}
+
+.games__block {
+    display: grid;
+    gap: 16px;
+}
+
+.game__block {
+    border: none;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.game__img-block {
+    display: block;
+    width: 100%;
+    position: relative;
+}
+
+.game__img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.game__label {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 4px 10px;
+    background-color: #f0f0f0;
+    color: #161616;
+}
+
+.game__description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 16px;
+}
+
+.price__new {
+    font-size: 20px;
+    line-height: 24px;
+    color: rgb(51, 222, 74);
+}
+
+.price__old {
+    font-size: 16px;
+    line-height: 20px;
+    text-decoration: line-through;
+    color: #db2828;
+}
+
+/* Стили для десктопа */
+@media (min-width: 1024px) {
+    .games__block {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Стили для планшета */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .games__block {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Стили для мобилы */
+@media (max-width: 767px) {
+    .games__block {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 10px 20px;
+}
