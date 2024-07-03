@@ -9,25 +9,34 @@
 </head>
 <body>
     <header>
-        <img class="header__logo" src="./sourse/logo.png" alt="logo">
-        <ul class="header__links">
-            <li>
-                <p class="header__link">Nintendo</p>
-            </li>
-            <li>
-                <p class="header__link">Play Station</p>
-            </li>
-            <li>
-                <p class="header__link">Staem</p>
-            </li>
-        </ul>
-        <select>
-            <option>US</option>
-        </select>
+        <div class="header__left">
+            <img class="header__logo" src="./sourse/logo.png" alt="logo">
+        </div>
+        <div class="header__middle">
+            <ul class="header__links">
+                <li class="header__list-item">
+                    <img class="header__link-icon" src="./sourse/icons/icon-switch.svg" alt="Nintendo">
+                    <p class="header__link">Nintendo</p>
+                </li>
+                <li class="header__list-item">
+                    <img class="header__link-icon" src="./sourse/icons/icon-ps.svg" alt="PS">
+                    <p class="header__link">Play Station</p>
+                </li>
+                <li class="header__list-item">
+                    <p class="header__link">Steam</p>
+                </li>
+            </ul>
+        </div>
+        <div class="header__right">
+            <select class="select__region">
+                <option value="US">🇺🇸 US</option>
+            </select>
+        </div>
     </header>
     <main>
         <h1>Games on Sale</h1>
         <div id="content">
+            <p id="total-games" class="games__total"></p>
             <div id="pagination-top" class="pagination"></div>
             <div id="games-grid" class="games__block"></div>
             <div id="pagination-bottom" class="pagination"></div>
