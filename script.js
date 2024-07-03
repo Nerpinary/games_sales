@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const PROXY_API_URL = 'http://localhost:3000/api/v1/discount?platformType=SWITCH&regionType=US&pageSize=16&pageNumber=';
+    const PROXY_API_URL = 'http://localhost:3000/api/v1/discount';
     let currentPage = 1;
     const pageSize = 16;
     let totalPages = 1;
 
-    async function fetchGames(pageNumber) {
+    const fetchGames = async (pageNumber) => {
         try {
-            const response = await fetch(`${PROXY_API_URL}${pageNumber}`);
+            const response = await fetch(`${PROXY_API_URL}?platformType=SWITCH&regionType=US&pageSize=${pageSize}&pageNumber=${pageNumber}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -15,18 +15,17 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error fetching games:', error);
         }
-    }
+    };
 
-    function renderGames(games) {
+    const renderGames = (games) => {
         const grid = document.getElementById('games-grid');
         grid.innerHTML = '';
 
         games.forEach(game => {
-            const gameItem = document.createElement('div');
-            gameItem.className = 'game__block';
-
             const truncatedName = game.name.length > 40 ? game.name.slice(0, 40) + '...' : game.name;
 
+            const gameItem = document.createElement('div');
+            gameItem.className = 'game__block';
             gameItem.innerHTML = `
                 <div class="game__img-block">
                     <img src="${game.cover}" alt="${game.name}" class="game__img">
@@ -42,9 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             grid.appendChild(gameItem);
         });
-    }
+    };
 
-    function createPageButton(pageNumber, isActive = false) {
+    const createPageButton = (pageNumber, isActive = false) => {
         const button = document.createElement('button');
         button.textContent = pageNumber;
         button.className = 'pagination__button';
@@ -54,16 +53,16 @@ document.addEventListener('DOMContentLoaded', () => {
             button.addEventListener('click', () => changePage(pageNumber));
         }
         return button;
-    }
+    };
 
-    function createEllipsis() {
+    const createEllipsis = () => {
         const ellipsis = document.createElement('span');
         ellipsis.textContent = '...';
         ellipsis.className = 'pagination__ellipsis';
         return ellipsis;
-    }
+    };
 
-    function updatePagination() {
+    const updatePagination = () => {
         const paginationTop = document.getElementById('pagination-top');
         const paginationBottom = document.getElementById('pagination-bottom');
 
@@ -73,14 +72,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const appendButton = (container, button) => container.appendChild(button);
 
         if (currentPage > 1) {
-            const prevButtonTop = document.createElement('button');
-            const prevButtonBottom = document.createElement('button');
+            const prevButtonTop = createPageButton(currentPage - 1);
+            const prevButtonBottom = createPageButton(currentPage - 1);
             prevButtonTop.innerHTML = '&larr;';
             prevButtonBottom.innerHTML = '&larr;';
             prevButtonTop.className = 'pagination__button pagination__button_prev';
             prevButtonBottom.className = 'pagination__button pagination__button_prev';
-            prevButtonTop.addEventListener('click', () => changePage(currentPage - 1));
-            prevButtonBottom.addEventListener('click', () => changePage(currentPage - 1));
             appendButton(paginationTop, prevButtonTop);
             appendButton(paginationBottom, prevButtonBottom);
         }
@@ -105,27 +102,52 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (currentPage < totalPages) {
-            const nextButtonTop = document.createElement('button');
-            const nextButtonBottom = document.createElement('button');
+            const nextButtonTop = createPageButton(currentPage + 1);
+            const nextButtonBottom = createPageButton(currentPage + 1);
             nextButtonTop.innerHTML = '&rarr;';
             nextButtonBottom.innerHTML = '&rarr;';
             nextButtonTop.className = 'pagination__button pagination__button_next';
             nextButtonBottom.className = 'pagination__button pagination__button_next';
-            nextButtonTop.addEventListener('click', () => changePage(currentPage + 1));
-            nextButtonBottom.addEventListener('click', () => changePage(currentPage + 1));
             appendButton(paginationTop, nextButtonTop);
             appendButton(paginationBottom, nextButtonBottom);
         }
-    }
+    };
 
-    async function changePage(pageNumber) {
+    const changePage = async (pageNumber) => {
         currentPage = pageNumber;
         const data = await fetchGames(currentPage);
         totalPages = Math.ceil(data.count / pageSize);
         document.getElementById('total-games').textContent = `Всего игр по скидке сегодня: ${data.count}`;
         renderGames(data.results);
         updatePagination();
-    }
+    };
 
+    // Инициализация страницы
     changePage(currentPage);
+
+    // Обработчики кликов на ссылки платформ
+    const linkNintendo = document.getElementById('link-nintendo');
+    const linkPS = document.getElementById('link-ps');
+    const linkSteam = document.getElementById('link-steam');
+
+    linkNintendo.addEventListener('click', () => {
+        document.documentElement.style.setProperty('--header-bg', '#161616');
+        document.documentElement.style.setProperty('--side-bg', '#00c3e3');
+        document.querySelector('.header__right').style.backgroundColor = '#ff4554';
+        document.querySelector('.header').style.borderRadius = '0 0 20px 20px';
+    });
+
+    linkPS.addEventListener('click', () => {
+        document.documentElement.style.setProperty('--header-bg', '#11176b');
+        document.documentElement.style.setProperty('--side-bg', '#11176b');
+        document.querySelector('.header__right').style.backgroundColor = '#11176b';
+        document.querySelector('.header').style.borderRadius = '0';
+    });
+
+    linkSteam.addEventListener('click', () => {
+        document.documentElement.style.setProperty('--header-bg', 'linear-gradient(to bottom, #0e1c30 25%, #1d89b0)');
+        document.documentElement.style.setProperty('--side-bg', 'transparent');
+        document.querySelector('.header__right').style.backgroundColor = 'transparent';
+        document.querySelector('.header').style.borderRadius = '0';
+    });
 });
