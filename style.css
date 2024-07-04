@@ -190,20 +190,7 @@ main {
     line-height: 20px;
     color: #b1b1b1;
     position: relative;
-}
-
-.price__old:before,
-.price__old:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    background-color: red;
-}
-
-.price__old:before {
-    top: 50%;
-    transform: translateY(-50%) rotate(-12deg);
+    text-decoration: line-through;
 }
 
 .price__old:after {
