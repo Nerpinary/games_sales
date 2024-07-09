@@ -1,0 +1,62 @@
+/* Add your styles here */
+.games__block {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .game__block {
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .game__img-block {
+    position: relative;
+  }
+  
+  .game__img {
+    width: 100%;
+    display: block;
+  }
+  
+  .game__label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: red;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .game__description {
+    padding: 16px;
+  }
+  
+  .game__title {
+    font-size: 18px;
+    margin: 0 0 8px;
+  }
+  
+  .prices {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  
+  .price__new {
+    font-size: 20px;
+    font-weight: bold;
+    color: green;
+  }
+  
+  .price__old {
+    font-size: 16px;
+    text-decoration: line-through;
+    color: #777;
+  }
+  

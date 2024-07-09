@@ -1,0 +1,47 @@
+/* Add your styles here */
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #282c34;
+  }
+  
+  .header__left,
+  .header__middle,
+  .header__right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header__logo {
+    height: 40px;
+  }
+  
+  .header__links {
+    list-style-type: none;
+    display: flex;
+    padding: 0;
+  }
+  
+  .header__list-item {
+    margin-right: 20px;
+    cursor: pointer;
+  }
+  
+  .header__link-icon {
+    height: 30px;
+    margin-right: 8px;
+  }
+  
+  .header__link {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .select__region {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+  }
+  

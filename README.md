@@ -1,13 +1,17 @@
 # games_sales
 SPA with actual sales on games stores
 
-## Запуск прокси
+## Launch
 
 ```bash
+
+## launch прокси
 node proxy.mjs
 
-### Установка зависимостей
+## install dependencies
 
-```bash
 npm install
 
+## launch app
+
+npm run dev

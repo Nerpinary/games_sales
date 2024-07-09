@@ -1,0 +1,31 @@
+/* Add your styles here */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .pagination__button {
+    border: none;
+    background: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .pagination__button_active {
+    font-weight: bold;
+    color: #282c34;
+  }
+  
+  .pagination__button_prev,
+  .pagination__button_next {
+    font-size: 20px;
+  }
+  
+  .pagination__ellipsis {
+    margin: 0 4px;
+    font-size: 16px;
+  }
+  
