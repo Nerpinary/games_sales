@@ -2,7 +2,7 @@
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 10px;
     background-color: #282c34;
   }
   
@@ -14,28 +14,36 @@
   }
   
   .header__logo {
-    height: 40px;
+    max-height: 70px;
   }
   
   .header__links {
     list-style-type: none;
     display: flex;
+    flex-direction: row;
+    gap: 16px;
     padding: 0;
   }
   
   .header__list-item {
-    margin-right: 20px;
+    margin: 0 10px;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
   }
   
   .header__link-icon {
     height: 30px;
-    margin-right: 8px;
+    width: 30px;
   }
   
   .header__link {
-    color: white;
+    color: #c3c9c6;
     text-decoration: none;
+    font-size: 20px;
+    line-height: 28px;
   }
   
   .select__region {
