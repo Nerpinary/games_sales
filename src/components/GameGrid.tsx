@@ -1,5 +1,6 @@
 import React from 'react';
 import './GameGrid.css';
+import DateLabel from './DateGameLabel';
 
 interface Game {
   name: string;
@@ -7,6 +8,7 @@ interface Game {
   discountPercent: number;
   price: string;
   originalPrice: string;
+  discountEndDate: string;
 }
 
 interface GameGridProps {
@@ -20,7 +22,8 @@ const GameGrid: React.FC<GameGridProps> = ({ games }) => {
         <div key={index} className="game__block">
           <div className="game__img-block">
             <img src={game.cover} alt={game.name} className="game__img" />
-            <div className="game__label">Скидка {game.discountPercent}%</div>
+            <div className="game__label game__label_price">Скидка {game.discountPercent}%</div>
+            <DateLabel endDate={game.discountEndDate} />
           </div>
           <div className="game__description">
             <h3 className="game__title" title={game.name}>

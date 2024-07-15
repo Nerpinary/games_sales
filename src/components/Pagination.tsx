@@ -18,13 +18,14 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     </button>
   );
 
-  const createEllipsis = () => (
-    <span key="ellipsis" className="pagination__ellipsis">
+  const createEllipsis = (key: string) => (
+    <span key={key} className="pagination__ellipsis">
       ...
     </span>
   );
 
   const buttons = [];
+  
   if (currentPage > 1) {
     buttons.push(
       <button
@@ -37,18 +38,22 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
     );
   }
 
-  if (currentPage > 4) {
-    buttons.push(createPageButton(1, false));
-    buttons.push(createEllipsis());
+  if (currentPage > 3) {
+    buttons.push(createPageButton(1));
+    if (currentPage > 4) {
+      buttons.push(createEllipsis('left-ellipsis'));
+    }
   }
 
-  for (let i = Math.max(1, currentPage - 3); i <= Math.min(totalPages, currentPage + 3); i++) {
+  for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
     buttons.push(createPageButton(i, i === currentPage));
   }
 
-  if (currentPage < totalPages - 3) {
-    buttons.push(createEllipsis());
-    buttons.push(createPageButton(totalPages, false));
+  if (currentPage < totalPages - 2) {
+    if (currentPage < totalPages - 3) {
+      buttons.push(createEllipsis('right-ellipsis'));
+    }
+    buttons.push(createPageButton(totalPages));
   }
 
   if (currentPage < totalPages) {

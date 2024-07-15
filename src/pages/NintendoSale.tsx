@@ -9,6 +9,7 @@ interface Game {
   discountPercent: number;
   price: string;
   originalPrice: string;
+  discountEndDate: string;
 }
 
 const NintendoSale: React.FC = () => {
