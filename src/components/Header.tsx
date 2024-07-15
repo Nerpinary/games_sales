@@ -1,5 +1,6 @@
 import React from 'react';
 import './Header.css';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const handlePlatformClick = (platform: string) => {
@@ -20,7 +21,9 @@ const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="header__left">
-        <img className="header__logo" src="../../public/logo.webp" alt="logo" />
+        <Link to="/">
+          <img className="header__logo" src="../../public/logo.webp" alt="logo" />
+        </Link>
       </div>
       <div className="header__middle">
         <ul className="header__links">

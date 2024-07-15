@@ -7,6 +7,7 @@ interface HomeCardProps {
   imgAlt: string;
   title: string;
   backgroundColor: string;
+  path: string;
 }
 
 interface HomeCardsGridProps {
@@ -18,7 +19,7 @@ const HomeCardsGrid: React.FC<HomeCardsGridProps> = ({ cards }) => {
     <div className="cards__container">
       {cards.map((card, index) => (
         <div key={index}>
-          <HomeCard imgSrc={card.imgSrc} imgAlt={card.imgAlt} title={card.title} backgroundColor={card.backgroundColor} />
+          <HomeCard imgSrc={card.imgSrc} imgAlt={card.imgAlt} title={card.title} backgroundColor={card.backgroundColor} path={card.path} />
         </div>
       ))}
     </div>

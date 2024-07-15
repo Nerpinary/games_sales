@@ -6,14 +6,15 @@ interface HomeCardProps {
     imgAlt: string;
     title: string;
     backgroundColor: string;
+    path: string;
 }
 
-const HomeCard: React.FC<HomeCardProps> = ({ imgSrc, imgAlt, title, backgroundColor }) => {
+const HomeCard: React.FC<HomeCardProps> = ({ imgSrc, imgAlt, title, backgroundColor, path }) => {
     return (
-        <div className='home__card' style={{backgroundColor: backgroundColor}}>
+        <a href={path} className='home__card' style={{backgroundColor: backgroundColor}}>
             <img className='home__card-img' src={imgSrc} alt={imgAlt} />
             <h2 className='home__card-title'>{title}</h2>
-        </div>
+        </a>
     )
 };
 

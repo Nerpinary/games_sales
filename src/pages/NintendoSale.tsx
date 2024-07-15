@@ -16,7 +16,7 @@ const NintendoSale: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalGames, setTotalGames] = useState(0);
-  const pageSize = 16;
+  const pageSize = 20;
 
   useEffect(() => {
     const fetchGames = async () => {

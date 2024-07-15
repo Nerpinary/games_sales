@@ -1,5 +1,6 @@
 /* Add your styles here */
 .games__block {
+    max-width: 1240px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
@@ -34,10 +35,15 @@
   }
   
   .game__description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 16px;
+    height: 30%;
   }
   
   .game__title {
+    color: #161616;
     font-size: 18px;
     margin: 0 0 8px;
   }

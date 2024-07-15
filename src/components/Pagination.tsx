@@ -32,7 +32,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         className="pagination__button pagination__button_prev"
         onClick={() => onPageChange(currentPage - 1)}
       >
-        &larr;
+        <img className='pagination__arrow' src="../../public/arrow_home.svg" alt="left_arrow" />
       </button>
     );
   }
@@ -58,7 +58,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPage
         className="pagination__button pagination__button_next"
         onClick={() => onPageChange(currentPage + 1)}
       >
-        &rarr;
+        <img className='pagination__arrow' src="../../public/arrow_home.svg" alt="right_arrow" />
       </button>
     );
   }

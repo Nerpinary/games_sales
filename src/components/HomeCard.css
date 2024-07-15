@@ -6,6 +6,7 @@
     justify-content: space-between;
     border-radius: 14px;
     overflow: hidden;
+    text-decoration: none;
 }
 .home__card-img {
     width: 100%;
