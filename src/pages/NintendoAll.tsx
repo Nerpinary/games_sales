@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Pagination from '../components/Pagination';
 import AllGameGrid from '../components/AllGameGrid';
@@ -17,23 +17,34 @@ const NintendoAll: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalGames, setTotalGames] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const pageSize = 20;
 
-  useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/v1/nintendo-games');
-        const gamesData = response.data;
+  const fetchGames = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get('http://localhost:3000/api/v1/nintendo-games');
+      let gamesData = response.data;
 
-        setGames(gamesData);
-        setTotalGames(gamesData.length); // Если количество игр приходит отдельно, можно изменить это
-        setTotalPages(Math.ceil(gamesData.length / pageSize));
-      } catch (error) {
-        console.error('Error fetching games:', error);
-      }
-    };
-    fetchGames();
+      // Фильтрация дублирующихся элементов
+      const uniqueGames = gamesData.filter((game: Game, index: number, self: Game[]) => 
+        index === self.findIndex((g) => g.name === game.name)
+      );
+
+      const paginatedGames = uniqueGames.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+      setGames(paginatedGames);
+      setTotalGames(uniqueGames.length);
+      setTotalPages(Math.ceil(uniqueGames.length / pageSize));
+    } catch (error) {
+      console.error('Error fetching games:', error);
+    } finally {
+      setIsLoading(false);
+    }
   }, [currentPage]);
+
+  useEffect(() => {
+    fetchGames();
+  }, [fetchGames]);
 
   const changePage = (page: number) => {
     setCurrentPage(page);
@@ -41,14 +52,17 @@ const NintendoAll: React.FC = () => {
 
   return (
     <main>
-      <h1>All Nintendo Switch Games</h1>
-      <p className="games__total">Total games: {totalGames}</p>
+      <h1>Все игры Nintendo</h1>
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={changePage}
       />
-      <AllGameGrid games={games} />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <AllGameGrid games={games} />
+      )}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

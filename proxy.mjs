@@ -44,7 +44,6 @@ app.get('/api/v1/nintendo-games', async (req, res) => {
                 'Accept-Encoding': 'gzip, deflate, br, zstd',
                 'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
                 'Connection': 'keep-alive',
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
             }
         });
         const html = await response.text();
@@ -59,15 +58,19 @@ app.get('/api/v1/nintendo-games', async (req, res) => {
             throw new Error('Invalid JSON structure');
         }
 
-        const games = jsonData.props.pageProps.page.content.merchandisedGrid.flat();
-        // const games = jsonData.props.pageProps.page.content.merchandisedGrid.flat().map((game) => ({
-        //     name: game.name,
-        //     productImage: game.productImage.publicId,
-        //     price: game.prices.minimum.finalPrice,
-        //     releaseDate: game.releaseDate,
-        //     categories: game.categories,
-        //     urlKey: game.urlKey,
-        // }));
+        // const games = jsonData.props.pageProps.page.content.merchandisedGrid.flat();
+
+        const games = jsonData.props.pageProps.page.content.merchandisedGrid.flat().map((game) => {
+            const variations = game.variations || [];
+            return variations.map((variation) => ({
+                name: variation.product.name,
+                productImage: variation.product.productImage.publicId,
+                price: variation.product.prices.minimum.finalPrice,
+                releaseDate: variation.product.releaseDate,
+                categories: game.categories,
+                urlKey: variation.product.urlKey,
+            }));
+        }).flat();
 
         res.json(games);
         console.log(games);
