@@ -7,6 +7,7 @@ const port = 3000;
 
 app.use(cors());
 
+// Существующий маршрут для /api/v1/discount
 app.get('/api/v1/discount', async (req, res) => {
     const { platformType, regionType, pageSize, pageNumber } = req.query;
     const apiUrl = `https://trendy-eng-shop.ru/api/v1/discount/?platformType=${platformType}&regionType=${regionType}&pageSize=${pageSize}&pageNumber=${pageNumber}`;
@@ -26,7 +27,53 @@ app.get('/api/v1/discount', async (req, res) => {
         const data = await response.json();
         res.json(data);
     } catch (error) {
+        console.error('Error fetching discount data:', error);
         res.status(500).json({ error: 'Error fetching data from API' });
+    }
+});
+
+// Новый маршрут для Nintendo Switch Games
+app.get('/api/v1/nintendo-games', async (req, res) => {
+    const url = 'https://www.nintendo.com/us/store/games/nintendo-switch-games/';
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+                'Accept-Encoding': 'gzip, deflate, br, zstd',
+                'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+                'Connection': 'keep-alive',
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
+            }
+        });
+        const html = await response.text();
+
+        // Находим тег <script> с id="__NEXT_DATA__"
+        const cheerio = await import('cheerio');
+        const $ = cheerio.load(html);
+        const scriptTag = $('#__NEXT_DATA__');
+        const jsonData = JSON.parse(scriptTag.html());
+
+        if (!jsonData || !jsonData.props || !jsonData.props.pageProps || !jsonData.props.pageProps.page || !jsonData.props.pageProps.page.content || !jsonData.props.pageProps.page.content.merchandisedGrid) {
+            throw new Error('Invalid JSON structure');
+        }
+
+        const games = jsonData.props.pageProps.page.content.merchandisedGrid.flat();
+        // const games = jsonData.props.pageProps.page.content.merchandisedGrid.flat().map((game) => ({
+        //     name: game.name,
+        //     productImage: game.productImage.publicId,
+        //     price: game.prices.minimum.finalPrice,
+        //     releaseDate: game.releaseDate,
+        //     categories: game.categories,
+        //     urlKey: game.urlKey,
+        // }));
+
+        res.json(games);
+        console.log(games);
+    } catch (error) {
+        console.error('Error fetching Nintendo games data:', error);
+        res.status(500).json({ error: 'Error fetching data from Nintendo website' });
     }
 });
 
