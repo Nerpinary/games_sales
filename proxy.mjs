@@ -34,7 +34,7 @@ app.get('/api/v1/discount', async (req, res) => {
 
 // Новый маршрут для Nintendo Switch Games
 app.get('/api/v1/nintendo-games', async (req, res) => {
-    const url = 'https://www.nintendo.com/us/store/games/nintendo-switch-games/';
+    const url = 'https://www.nintendo.com/us/store/games/';
 
     try {
         const response = await fetch(url, {
@@ -64,8 +64,8 @@ app.get('/api/v1/nintendo-games', async (req, res) => {
             const variations = game.variations || [];
             return variations.map((variation) => ({
                 name: variation.product.name,
-                productImage: variation.product.productImage.publicId,
-                price: variation.product.prices.minimum.finalPrice,
+                productImage: variation.product.productImageSquare?.url ?? variation.product.productImage.publicId ?? null,
+                // price: variation.product.prices.minimum.finalPrice,
                 releaseDate: variation.product.releaseDate,
                 categories: game.categories,
                 urlKey: variation.product.urlKey,
